@@ -29,12 +29,43 @@ This receiver periodically retrieves the clock offset from a NTP server.
 
 ### Example Configuration
 
+Basic receiver configuration:
+
 ```yaml
 receivers:
   ntp:
     endpoint: pool.ntp.org:123
     collection_interval: 1h
     initial_delay: 5m
+```
+
+Complete example with service pipeline:
+
+```yaml
+receivers:
+  ntp:
+    endpoint: pool.ntp.org:123
+    collection_interval: 30m
+    initial_delay: 1s
+    metrics:
+      ntp.time_offset:
+        enabled: true
+      ntp.time_correction:
+        enabled: true
+
+processors:
+  batch:
+
+exporters:
+  otlp:
+    endpoint: localhost:4317
+
+service:
+  pipelines:
+    metrics:
+      receivers: [ntp]
+      processors: [batch]
+      exporters: [otlp]
 ```
 
 The full list of settings exposed for this receiver are documented in [config.go](./config.go) with detailed sample configurations in [testdata/config.yaml](./internal/metadata/testdata/config.yaml).
