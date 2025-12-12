@@ -20,7 +20,7 @@ Receives metric data in [Prometheus](https://prometheus.io/) format. See the
 
 ## ⚠️ Warning
 
-Note: This component is currently work in progress. It has several limitations
+Note: This component is currently a work in progress. It has several limitations
 and please don't use it if the following limitations are a concern:
 
 * Collector cannot auto-scale the scraping yet when multiple replicas of the
